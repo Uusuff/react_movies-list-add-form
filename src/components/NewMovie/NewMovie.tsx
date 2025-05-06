@@ -13,8 +13,12 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [imgUrl, setImgUrl] = useState('');
   const [imdbUrl, setImdbUrl] = useState('');
   const [imdbId, setImdbId] = useState('');
-  const urlPattern =
-    /^((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www\.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@,.\w_]*)#?(?:[,.!/\\\w]*))?)$/;
+  const urlPattern = new RegExp(
+    '^((([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[-;:&=+$,\\w]+@)?[A-Za-z0-9.-]+|' +
+      '(?:www\\.|[-;:&=+$,\\w]+@)[A-Za-z0-9.-]+)' +
+      '((?:\\/[+~%/\\.\\w-_]*)?\\??(?:[-+=&;%@,\\.\\w_]*)#?' +
+      '(?:[,.!/\\\\\\w]*))?)$',
+  );
 
   const handaleAddMovie = (event: React.FormEvent) => {
     event.preventDefault();
@@ -41,7 +45,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="title"
         label="Title"
         value={title}
-        onChange={(newValue) => {
+        onChange={newValue => {
           setTitle(newValue);
         }}
         required
@@ -51,7 +55,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="description"
         label="Description"
         value={description}
-        onChange={(newDescription) => {
+        onChange={newDescription => {
           setDescription(newDescription);
         }}
       />
@@ -60,11 +64,11 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="imgUrl"
         label="Image URL"
         value={imgUrl}
-        onChange={(newImgUrl) => {
+        onChange={newImgUrl => {
           setImgUrl(newImgUrl);
         }}
         required
-        validate={(value) =>
+        validate={value =>
           urlPattern.test(value) ? null : 'Must be a valid URL'
         }
       />
@@ -73,11 +77,11 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="imdbUrl"
         label="Imdb URL"
         value={imdbUrl}
-        onChange={(newImdbUrl) => {
+        onChange={newImdbUrl => {
           setImdbUrl(newImdbUrl);
         }}
         required
-        validate={(value) =>
+        validate={value =>
           urlPattern.test(value) ? null : 'Must be a valid URL'
         }
       />
@@ -86,7 +90,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="imdbId"
         label="Imdb ID"
         value={imdbId}
-        onChange={(newImdbId) => {
+        onChange={newImdbId => {
           setImdbId(newImdbId);
         }}
         required
@@ -98,7 +102,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
             type="submit"
             data-cy="submit-button"
             className="button is-link"
-            onClick={(event) => {
+            onClick={event => {
               handaleAddMovie(event);
             }}
             disabled={
