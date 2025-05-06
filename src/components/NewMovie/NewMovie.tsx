@@ -20,7 +20,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
       '(?:[,.!/\\\\\\w]*))?)$',
   );
 
-  const handaleAddMovie = (event: React.FormEvent) => {
+  const handleAddMovie = (event: React.FormEvent) => {
     event.preventDefault();
     onAdd({
       title,
@@ -103,7 +103,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
             data-cy="submit-button"
             className="button is-link"
             onClick={event => {
-              handaleAddMovie(event);
+              handleAddMovie(event);
             }}
             disabled={
               !title.trim() ||
