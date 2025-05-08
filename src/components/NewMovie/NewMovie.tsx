@@ -8,11 +8,14 @@ type Props = {
 
 export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [formKey, setFormKey] = useState(0);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
-  const [imdbUrl, setImdbUrl] = useState('');
-  const [imdbId, setImdbId] = useState('');
+  const [newMovie, setNewMovie] = useState({
+    title: '',
+    description: '',
+    imgUrl: '',
+    imdbUrl: '',
+    imdbId: '',
+  });
+
   const urlPattern = new RegExp(
     '^((([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[-;:&=+$,\\w]+@)?[A-Za-z0-9.-]+|' +
       '(?:www\\.|[-;:&=+$,\\w]+@)[A-Za-z0-9.-]+)' +
@@ -22,19 +25,15 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
 
   const handleAddMovie = (event: React.FormEvent) => {
     event.preventDefault();
-    onAdd({
-      title,
-      description,
-      imgUrl,
-      imdbUrl,
-      imdbId,
+    onAdd(newMovie);
+    setNewMovie({
+      title: '',
+      description: '',
+      imgUrl: '',
+      imdbUrl: '',
+      imdbId: '',
     });
-    setTitle('');
-    setDescription('');
-    setImgUrl('');
-    setImdbUrl('');
-    setImdbId('');
-    setFormKey((prevKey: number) => prevKey + 1);
+    setFormKey((prevKey) => prevKey + 1);
   };
 
   return (
@@ -44,55 +43,45 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
       <TextField
         name="title"
         label="Title"
-        value={title}
-        onChange={(newValue) => {
-          setTitle(newValue);
-        }}
+        value={newMovie.title}
+        onChange={(value) => setNewMovie({ ...newMovie, title: value })}
         required
       />
 
       <TextField
         name="description"
         label="Description"
-        value={description}
-        onChange={(newDescription) => {
-          setDescription(newDescription);
-        }}
+        value={newMovie.description}
+        onChange={(value) => setNewMovie({ ...newMovie, description: value })}
       />
 
       <TextField
         name="imgUrl"
         label="Image URL"
-        value={imgUrl}
-        onChange={(newImgUrl) => {
-          setImgUrl(newImgUrl);
-        }}
+        value={newMovie.imgUrl}
+        onChange={(value) => setNewMovie({ ...newMovie, imgUrl: value })}
         required
         validate={(value) =>
-          urlPattern.test(value) ? null : 'Must be a valid URL'
+          urlPattern.test(value.trim()) ? null : 'Must be a valid URL'
         }
       />
 
       <TextField
         name="imdbUrl"
         label="Imdb URL"
-        value={imdbUrl}
-        onChange={(newImdbUrl) => {
-          setImdbUrl(newImdbUrl);
-        }}
+        value={newMovie.imdbUrl}
+        onChange={(value) => setNewMovie({ ...newMovie, imdbUrl: value })}
         required
         validate={(value) =>
-          urlPattern.test(value) ? null : 'Must be a valid URL'
+          urlPattern.test(value.trim()) ? null : 'Must be a valid URL'
         }
       />
 
       <TextField
         name="imdbId"
         label="Imdb ID"
-        value={imdbId}
-        onChange={(newImdbId) => {
-          setImdbId(newImdbId);
-        }}
+        value={newMovie.imdbId}
+        onChange={(value) => setNewMovie({ ...newMovie, imdbId: value })}
         required
       />
 
@@ -102,16 +91,14 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
             type="submit"
             data-cy="submit-button"
             className="button is-link"
-            onClick={(event) => {
-              handleAddMovie(event);
-            }}
+            onClick={handleAddMovie}
             disabled={
-              !title.trim() ||
-              !imgUrl.trim() ||
-              !urlPattern.test(imgUrl.trim()) ||
-              !imdbUrl.trim() ||
-              !urlPattern.test(imdbUrl.trim()) ||
-              !imdbId.trim()
+              !newMovie.title.trim() ||
+              !newMovie.imgUrl.trim() ||
+              !urlPattern.test(newMovie.imgUrl.trim()) ||
+              !newMovie.imdbUrl.trim() ||
+              !urlPattern.test(newMovie.imdbUrl.trim()) ||
+              !newMovie.imdbId.trim()
             }
           >
             Add
