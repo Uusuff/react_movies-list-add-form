@@ -33,7 +33,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
       imdbUrl: '',
       imdbId: '',
     });
-    setFormKey((prevKey) => prevKey + 1);
+    setFormKey(prevKey => prevKey + 1);
   };
 
   return (
@@ -44,7 +44,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="title"
         label="Title"
         value={newMovie.title}
-        onChange={(value) => setNewMovie({ ...newMovie, title: value })}
+        onChange={value => setNewMovie({ ...newMovie, title: value })}
         required
       />
 
@@ -52,16 +52,16 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="description"
         label="Description"
         value={newMovie.description}
-        onChange={(value) => setNewMovie({ ...newMovie, description: value })}
+        onChange={value => setNewMovie({ ...newMovie, description: value })}
       />
 
       <TextField
         name="imgUrl"
         label="Image URL"
         value={newMovie.imgUrl}
-        onChange={(value) => setNewMovie({ ...newMovie, imgUrl: value })}
+        onChange={value => setNewMovie({ ...newMovie, imgUrl: value })}
         required
-        validate={(value) =>
+        validate={value =>
           urlPattern.test(value.trim()) ? null : 'Must be a valid URL'
         }
       />
@@ -70,9 +70,9 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="imdbUrl"
         label="Imdb URL"
         value={newMovie.imdbUrl}
-        onChange={(value) => setNewMovie({ ...newMovie, imdbUrl: value })}
+        onChange={value => setNewMovie({ ...newMovie, imdbUrl: value })}
         required
-        validate={(value) =>
+        validate={value =>
           urlPattern.test(value.trim()) ? null : 'Must be a valid URL'
         }
       />
@@ -81,7 +81,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         name="imdbId"
         label="Imdb ID"
         value={newMovie.imdbId}
-        onChange={(value) => setNewMovie({ ...newMovie, imdbId: value })}
+        onChange={value => setNewMovie({ ...newMovie, imdbId: value })}
         required
       />
 
